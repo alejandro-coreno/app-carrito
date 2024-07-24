@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { getProductos } from "../services/productsService";
 import CardItem from "./CardItem";
-const CardView = () => {
+
+const CardView = ({handlerAddProduct}) => {
     
     const [productos, setProductos] = useState([])
     
@@ -14,7 +15,7 @@ const CardView = () => {
         {
             productos.map( producto =>
                 <div className="col-4 my-2" key={producto.id}>
-                    <CardItem producto={producto}/>
+                    <CardItem producto={producto} handlerAddProduct={ handlerAddProduct }/>
                 </div>
             )
         }

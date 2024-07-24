@@ -1,7 +1,11 @@
 
-const CardItem = ({producto}) => {
+const CardItem = ({producto, handlerAddProduct}) => {
     //Desestructuramos el objeto producto con cada una de sus propiedades 
-    const { nombre, descripcion, precio } = producto;
+    const { id, nombre, descripcion, precio } = producto;
+
+    const addProduct = (product) => {
+        handlerAddProduct(product);
+    }
 
     return (
         <div className="card">
@@ -9,7 +13,7 @@ const CardItem = ({producto}) => {
                 <h5 className="card-title">{ nombre }</h5>
                 <p className="card-text">{ descripcion }</p>
                 <p className="card-text">${ precio }</p>
-                <button className="btn btn-primary">Agregar</button>
+                <button className="btn btn-primary" onClick={() => addProduct({id, nombre, descripcion, precio})}>Agregar</button>
             </div>
         </div>  
     );

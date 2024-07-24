@@ -1,6 +1,9 @@
 import { useState } from "react";
 
-const CarritoView = () => {
+const CarritoView = ({ items }) => {
+
+    
+
     return (
         <div className="my-4 w-50">
             <h3>Carro de Compras</h3>
@@ -16,13 +19,20 @@ const CarritoView = () => {
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>nombre</td>
-                        <td>precio</td>
-                        <td>cantidad</td>
-                        <td>total</td>
-                        <td>eliminar</td>
-                    </tr>
+                    {
+                        items.map( item  => 
+                        
+                            <tr key={item.producto.id}>
+                                <td>{item.producto.nombre}</td>
+                                <td>{item.producto.precio}</td>
+                                <td>{item.cantidad}</td>
+                                <td>{item.producto.precio * item.cantidad}</td>
+                                <td>eliminar</td>
+                            </tr>
+                        )
+
+                    }
+
                 </tbody>
 
                 <tfoot>
