@@ -3,10 +3,11 @@ import CardView from "./components/CardView";
 import CarritoView from "./components/CarritoView";
 
 
+const initialItems = JSON.parse(sessionStorage.getItem('cart')) || []
 
 const CardApp = () => {
 
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState(initialItems);
     
     const handlerAddProduct = ( producto ) => {
 
@@ -30,12 +31,19 @@ const CardApp = () => {
 
         }
 
-
     }
+
+    const handleDeleteProductCard = ( id ) => {
+        setCartItems([
+            ...cartItems.filter( i => i.producto.id !== id )
+        ]);
+    }
+
+    console.log( initialItems )
 
     return (
         <>
-            <div className="container">
+            <div className="container my-4">
 
                 <h3>Cart App</h3>
                 
@@ -43,9 +51,13 @@ const CardApp = () => {
                 <CardView handlerAddProduct={ handlerAddProduct } />
 
                 {/* Componente Carrito*/}
-                
-                <CarritoView items={cartItems} />
 
+                {/* Validamos que el carrito tenga datos para mostrarlo */}
+                
+                {
+                    cartItems.length > 0 && <CarritoView items={cartItems}  handlerDelete={ handleDeleteProductCard }/>
+                }
+                
             </div>
         </>
     );

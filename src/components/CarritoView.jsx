@@ -1,8 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { calculateTotal } from "../services/productsService";
 
-const CarritoView = ({ items }) => {
+const CarritoView = ({ items, handlerDelete }) => {
 
+    //useState para total del carrito
+    const [total, setTotal] = useState(0)
+
+    //cada que cambian los items se realiza se actuliza el total
+
+    useEffect(() => {
+        setTotal( calculateTotal(items) );
+        sessionStorage.setItem('cart', JSON.stringify(items))
+    }, [ items ]);
     
+    const onDeleteProducto =  (id) => {
+        handlerDelete(id)
+    }
+
+
+
 
     return (
         <div className="my-4 w-50">
@@ -27,7 +43,7 @@ const CarritoView = ({ items }) => {
                                 <td>{item.producto.precio}</td>
                                 <td>{item.cantidad}</td>
                                 <td>{item.producto.precio * item.cantidad}</td>
-                                <td>eliminar</td>
+                                <td><button className="btn btn-danger" type="button" onClick={() => onDeleteProducto(item.producto.id)}>Eliminar</button></td>
                             </tr>
                         )
 
@@ -38,7 +54,7 @@ const CarritoView = ({ items }) => {
                 <tfoot>
                     <tr>
                         <td colSpan="3" className="text-end fw-bold">Total</td>
-                        <td colSpan="2"  className="text-start fw-bold">12334</td>
+                        <td colSpan="2"  className="text-start fw-bold">{ total }</td>
                     </tr>
                 </tfoot>
             </table>
