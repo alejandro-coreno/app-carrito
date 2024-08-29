@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
+import { itemsReducer } from "./reducer/itemsReducer";
 import CardView from "./components/CardView";
 import CarritoView from "./components/CarritoView";
 
@@ -7,39 +8,40 @@ const initialItems = JSON.parse(sessionStorage.getItem('cart')) || []
 
 const CardApp = () => {
 
-    const [cartItems, setCartItems] = useState(initialItems);
+    // const [cartItems, setCartItems] = useState(initialItems);
+
+    // ocupamos el useReducer para manejar el estado del carrito
+    // 1.- estado , la funcion despachadora , la funcion reductora y nuestro datos iniciales
+    const [cartItems, dispatch] = useReducer(itemsReducer, initialItems)
     
     const handlerAddProduct = ( producto ) => {
 
         const hasItem = cartItems.find(( i ) => i.producto.id === producto.id);
 
         if (hasItem) {
-            setCartItems([
-                ...cartItems.filter(( i ) => i.producto.id !== producto.id ),
-                {
-                    producto,
-                    cantidad: hasItem.cantidad + 1 
-                }
-            ])
+           dispatch({
+                type: 'UpdateQuantityProductCart',
+                payload: producto
+            });
         }
         else {
-            setCartItems([...cartItems, {
-                producto,
-                cantidad: 1,
-                total: producto.precio * 1 
-            }]);
-
+            dispatch({
+                type:'AddProductCard',
+                payload: producto
+            });
         }
 
     }
 
     const handleDeleteProductCard = ( id ) => {
-        setCartItems([
-            ...cartItems.filter( i => i.producto.id !== id )
-        ]);
+        dispatch({
+            type: 'DeleteProductCart',
+            payload: id 
+        });
     }
 
     console.log( initialItems )
+    console.log( cartItems);
 
     return (
         <>
