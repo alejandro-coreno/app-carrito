@@ -1,4 +1,6 @@
 import { useItemsCart } from "./hooks/useItemsCart";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { Navbar } from "./components/Navbar";
 import CardView from "./components/CardView";
 import CarritoView from "./components/CarritoView";
 
@@ -13,19 +15,30 @@ const CardApp = () => {
         <>
             <div className="container my-4">
 
-                <h3>Cart App</h3>
-                
-                {/* Componente CardView*/}
-                <CardView handlerAddProduct={ handlerAddProduct } />
+                <Navbar />
 
-                {/* Componente Carrito*/}
 
-                {/* Validamos que el carrito tenga datos para mostrarlo */}
-                
-                {
-                    cartItems.length > 0 && <CarritoView items={cartItems}  handlerDelete={ handleDeleteProductCard }/>
-                }
-                
+                <Routes>
+                    {/* Ruta Principal */}
+                    <Route path="/" element={ <Navigate to="/catalog" />}/>
+                    {/* Componente CardView*/}
+                    <Route 
+                        path="catalog" 
+                        element={ <CardView handlerAddProduct={ handlerAddProduct } />} 
+                    />
+                    {/* Componente Carrito*/}
+                    {/* Validamos que el carrito tenga datos para mostrarlo */}
+                    <Route 
+                        path="cart" 
+                        element={(
+                        cartItems.length <= 0 
+                        ?
+                            <div className="alert alert-warning">¡No hay productos en el carro de compras!</div>
+                        : 
+                            <CarritoView items={cartItems}  handlerDelete={ handleDeleteProductCard }/>)} 
+                    />
+                </Routes>
+                   
             </div>
         </>
     );
