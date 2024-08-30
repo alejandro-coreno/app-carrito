@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { calculateTotal } from "../services/productsService";
+import { useNavigate } from "react-router-dom";
 
 const CarritoView = ({ items, handlerDelete }) => {
 
     //useState para total del carrito
-    const [total, setTotal] = useState(0)
+    const [total, setTotal] = useState(0);
+
+    const navigate = useNavigate();
 
     //cada que cambian los items se realiza se actuliza el total
 
@@ -16,6 +19,10 @@ const CarritoView = ({ items, handlerDelete }) => {
         handlerDelete(id)
     }
 
+    // funcion que nos redirrecciona al catalog
+    const onCatalog = () => {
+        navigate('/catalog')
+    }
 
 
 
@@ -57,6 +64,14 @@ const CarritoView = ({ items, handlerDelete }) => {
                     </tr>
                 </tfoot>
             </table>
+
+            <button 
+                type="button"
+                className="btn btn-success"
+                onClick={onCatalog}
+            >
+                Seguir Comprando
+            </button>
         </div>
     );
 }

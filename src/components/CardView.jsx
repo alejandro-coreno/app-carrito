@@ -12,14 +12,14 @@ const CardView = ({handlerAddProduct}) => {
 
     return (
         <div className="row">
-        {
-            productos.map( producto =>
-                <div className="col-4 my-2" key={producto.id}>
-                    <CardItem producto={producto} handlerAddProduct={ handlerAddProduct }/>
-                </div>
-            )
-        }
-    </div>
+            {
+                productos.map( producto =>
+                    <div className="col-4 my-2" key={producto.id}>
+                        <CardItem producto={producto} handlerAddProduct={ handlerAddProduct }/>
+                    </div>
+                )
+            }
+        </div>
     );
 }
 
