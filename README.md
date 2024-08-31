@@ -5,6 +5,6 @@
 ### React + Vite + Bootstrap
 
 ```
-    https://app-cart-js.netlify.app/catalog
+    https://app-cart-js.netlify.app/
 ```
 
